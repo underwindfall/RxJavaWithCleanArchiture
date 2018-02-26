@@ -10,28 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
-import com.practice.qifan.data.network.Network;
-import com.practice.qifan.domain.bean.ZhuangbiImageBean;
 import com.practice.qifan.rxjavapractice.BaseFragment;
 import com.practice.qifan.rxjavapractice.R;
 import com.practice.qifan.rxjavapractice.adapter.ZhuangbiListAdapter;
 import com.practice.qifan.rxjavapractice.mapper.ZhuangbiModel;
-import com.practice.qifan.rxjavapractice.presenter.ElementaryPresenter;
 import com.practice.qifan.rxjavapractice.view.ElementaryView;
 
 import java.util.Collection;
 import java.util.List;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by qifan on 2018/1/30.
@@ -43,7 +35,7 @@ public class ElementaryFragment extends BaseFragment implements ElementaryView{
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.gridRv)
     RecyclerView gridRv;
-    ElementaryPresenter elementaryPresenter = new ElementaryPresenter(this);
+    //    ElementaryPresenter elementaryPresenter = new ElementaryPresenter(this);
     ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
 
     @OnCheckedChanged({R.id.searchRb1, R.id.searchRb2, R.id.searchRb3, R.id.searchRb4})
@@ -52,23 +44,23 @@ public class ElementaryFragment extends BaseFragment implements ElementaryView{
 //            unSubscribe();
             adapter.setImages(null);
             swipeRefreshLayout.setRefreshing(true);
-            this.elementaryPresenter.initialize();
+//            this.elementaryPresenter.initialize();
         }
     }
 
     @Override
     public void onViewCreated(@android.support.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.elementaryPresenter.setView(this);
+//        this.elementaryPresenter.setView(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        this.elementaryPresenter.destory();
+//        this.elementaryPresenter.destory();
     }
 //    private void search(String key) {
-//        disposable = Network.getZhuangbiApi()
+//        disposable = NetworkModule.getZhuangbiApi()
 //                .search(key)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +112,7 @@ public class ElementaryFragment extends BaseFragment implements ElementaryView{
     }
 
     @Override
-    public void viewUZhuangbi(ZhuangbiModel userModel) {
+    public void viewUZhuangbi(ZhuangbiModel zhuangbiModel) {
 
     }
 }
