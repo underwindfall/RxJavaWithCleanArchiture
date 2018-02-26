@@ -32,9 +32,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
-    implementation 'com.google.dagger:dagger:2.13'
-    implementation 'com.google.dagger:dagger-android-support:2.13' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    implementation 'com.google.dagger:dagger:2.8'
+//    implementation 'com.google.dagger:dagger-android-support:2.9' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

@@ -2,15 +2,21 @@ package com.practice.qifan.rxjavapractice.mapper;
 
 import com.practice.qifan.domain.bean.ZhuangbiImageBean;
 import com.practice.qifan.domain.modelMapper.Mapper;
+import com.practice.qifan.rxjavapractice.dagger.scope.PerActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 /**
  * Created by qifan on 2018/2/20.
  */
-
+@PerActivity
 public class ZhuangbiModelMapper implements Mapper<ZhuangbiModel> {
+    @Inject
+    public ZhuangbiModelMapper() {
+    }
 
     @Override
     public ZhuangbiModel transform(Object object) {

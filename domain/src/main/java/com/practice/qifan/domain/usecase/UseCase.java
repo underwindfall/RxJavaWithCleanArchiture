@@ -5,9 +5,9 @@ package com.practice.qifan.domain.usecase;
  */
 
 import com.practice.qifan.domain.executor.PostExecutionThread;
-import com.practice.qifan.domain.executor.ThreadExecutor;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -23,12 +23,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public abstract class UseCase<T> {
 
-    private final ThreadExecutor threadExecutor;
     private final PostExecutionThread postExecutionThread;
     private final CompositeDisposable disposables;
 
-    protected UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        this.threadExecutor = threadExecutor;
+    protected UseCase(PostExecutionThread postExecutionThread) {
         this.postExecutionThread = postExecutionThread;
         this.disposables = new CompositeDisposable();
     }
@@ -44,10 +42,11 @@ public abstract class UseCase<T> {
      * @param observer {@link DisposableObserver} which will be listening to the observable build
      *                 by {@link #buildUseCaseObservable()} ()} method.
      */
-    public void execute(DisposableObserver observer) {
+    public void execute(DisposableObserver<T> observer) {
+
         if (observer != null) {
             final Observable<T> observable = this.buildUseCaseObservable()
-                    .subscribeOn(Schedulers.from(threadExecutor))
+                    .subscribeOn(Schedulers.io())
                     .observeOn(postExecutionThread.getScheduler());
             addDisposable(observable.subscribeWith(observer));
         }

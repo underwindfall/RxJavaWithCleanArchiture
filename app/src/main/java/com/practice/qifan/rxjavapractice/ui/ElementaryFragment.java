@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import android.widget.RadioButton;
 import com.practice.qifan.rxjavapractice.BaseFragment;
 import com.practice.qifan.rxjavapractice.R;
 import com.practice.qifan.rxjavapractice.adapter.ZhuangbiListAdapter;
+import com.practice.qifan.rxjavapractice.dagger.component.ImageComponent;
 import com.practice.qifan.rxjavapractice.mapper.ZhuangbiModel;
-import com.practice.qifan.rxjavapractice.view.ElementaryView;
+import com.practice.qifan.rxjavapractice.presenter.ElementaryPresenter;
+import com.practice.qifan.rxjavapractice.view.ElementaryContract;
 
 import java.util.Collection;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,56 +34,27 @@ import io.reactivex.annotations.NonNull;
  * Created by qifan on 2018/1/30.
  */
 
-public class ElementaryFragment extends BaseFragment implements ElementaryView{
+public class ElementaryFragment extends BaseFragment implements ElementaryContract.View {
 
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.gridRv)
     RecyclerView gridRv;
-    //    ElementaryPresenter elementaryPresenter = new ElementaryPresenter(this);
+    @Inject
+    ElementaryPresenter mElementaryPresenter;
+
     ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
 
     @OnCheckedChanged({R.id.searchRb1, R.id.searchRb2, R.id.searchRb3, R.id.searchRb4})
     void onTagChecked(RadioButton searchRb, boolean checked) {
         if (checked) {
-//            unSubscribe();
             adapter.setImages(null);
             swipeRefreshLayout.setRefreshing(true);
-//            this.elementaryPresenter.initialize();
+            mElementaryPresenter.setKeyWord(searchRb.getText().toString());
+            mElementaryPresenter.showImageList();
         }
     }
 
-    @Override
-    public void onViewCreated(@android.support.annotation.NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        this.elementaryPresenter.setView(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        this.elementaryPresenter.destory();
-    }
-//    private void search(String key) {
-//        disposable = NetworkModule.getZhuangbiApi()
-//                .search(key)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                        new Consumer<List<ZhuangbiImageBean>>() {
-//                            @Override
-//                            public void accept(@NonNull List<ZhuangbiImageBean> images) throws Exception {
-//
-//                            }
-//                        }, new Consumer<Throwable>() {
-//                            @Override
-//                            public void accept(@NonNull Throwable throwable) throws Exception {
-//                                swipeRefreshLayout.setRefreshing(false);
-//                                Toast.makeText(getActivity(), R.string.loading_failed, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                );
-//    }
 
     @Nullable
     @Override
@@ -93,6 +69,19 @@ public class ElementaryFragment extends BaseFragment implements ElementaryView{
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule()).inject(this);
+        mElementaryPresenter.subscribe(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mElementaryPresenter.unsubscribe();
+    }
+
+    @Override
     protected int getDialogRes() {
         return R.layout.dialog_elementary;
     }
@@ -103,16 +92,9 @@ public class ElementaryFragment extends BaseFragment implements ElementaryView{
     }
 
     @Override
-    public void renderUserList(Collection<ZhuangbiModel> zhuangbiModelCollection) {
-        if (zhuangbiModelCollection!=null){
-            swipeRefreshLayout.setRefreshing(false);
-            adapter.setImages((List<ZhuangbiModel>) zhuangbiModelCollection);
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void viewUZhuangbi(ZhuangbiModel zhuangbiModel) {
-
+    public void renderImageList(Collection<ZhuangbiModel> zhuangbiModelCollection) {
+        swipeRefreshLayout.setRefreshing(false);
+        adapter.setImages((List<ZhuangbiModel>) zhuangbiModelCollection);
+        Log.d("Fragment", zhuangbiModelCollection.size() + "");
     }
 }

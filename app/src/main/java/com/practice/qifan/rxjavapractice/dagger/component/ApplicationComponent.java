@@ -5,33 +5,36 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.practice.qifan.data.network.dagger.NetworkModule;
 import com.practice.qifan.data.network.dagger.RepositoryModule;
+import com.practice.qifan.domain.executor.PostExecutionThread;
 import com.practice.qifan.domain.repository.ZhuangbiImageRepository;
+import com.practice.qifan.rxjavapractice.BaseActivity;
 import com.practice.qifan.rxjavapractice.RxJavaSampleApp;
 import com.practice.qifan.rxjavapractice.dagger.module.ApplicationModule;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
-import dagger.android.support.AndroidSupportInjectionModule;
 import io.reactivex.Scheduler;
 
 /**
  * Created by qifan on 2018/2/25.
  */
 @Singleton
-@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, NetworkModule.class, RepositoryModule.class})
-public interface ApplicationComponent extends AndroidInjector<DaggerApplication> {
+@Component(modules = {ApplicationModule.class, NetworkModule.class, RepositoryModule.class})
+public interface ApplicationComponent {
+
     void inject(RxJavaSampleApp rxJavaSampleApp);
+
+    void inject(BaseActivity baseActivity);
 
     Context applicationContext();
 
     Gson gson();
 
-    Scheduler scheduler();
+    PostExecutionThread postExecutionThread();
 
     ZhuangbiImageRepository zhuangbiImageRepository();
+
 
     final class Initializer {
         private Initializer() {
@@ -41,7 +44,7 @@ public interface ApplicationComponent extends AndroidInjector<DaggerApplication>
         public static ApplicationComponent init(Context context) {
             return DaggerApplicationComponent.builder()
                     .applicationModule(new ApplicationModule(context))
-                    .netModule(new NetworkModule())
+                    .networkModule(new NetworkModule())
                     .repositoryModule(new RepositoryModule())
                     .build();
         }

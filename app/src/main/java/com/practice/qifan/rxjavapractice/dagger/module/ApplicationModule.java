@@ -2,6 +2,9 @@ package com.practice.qifan.rxjavapractice.dagger.module;
 
 import android.content.Context;
 
+import com.practice.qifan.domain.executor.PostExecutionThread;
+import com.practice.qifan.rxjavapractice.UIThread;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -28,7 +31,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    Scheduler provideScheduler() {
-        return AndroidSchedulers.mainThread();
+    PostExecutionThread providePostExecutionThread(UIThread uiThread){
+        return uiThread;
     }
+
 }

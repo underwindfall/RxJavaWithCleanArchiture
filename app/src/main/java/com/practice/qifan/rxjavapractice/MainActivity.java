@@ -1,5 +1,6 @@
 package com.practice.qifan.rxjavapractice;
 
+import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,12 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import com.practice.qifan.rxjavapractice.dagger.component.ImageComponent;
 import com.practice.qifan.rxjavapractice.ui.ElementaryFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @BindView(android.R.id.tabs)
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
@@ -21,12 +23,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolBar)
     Toolbar toolBar;
 
+//    ImageComponent mImageComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
+//        mImageComponent = ImageComponent.Initializer.init(getApplicationComponent(),getActivityModule());
         viewPager.setAdapter((new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -75,4 +80,8 @@ public class MainActivity extends AppCompatActivity {
         }));
         tabLayout.setupWithViewPager(viewPager);
     }
+
+//    public ImageComponent getImageComponent() {
+//        return mImageComponent;
+//    }
 }

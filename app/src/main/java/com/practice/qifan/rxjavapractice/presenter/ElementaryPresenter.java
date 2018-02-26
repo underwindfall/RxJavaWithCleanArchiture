@@ -1,76 +1,82 @@
 package com.practice.qifan.rxjavapractice.presenter;
 
+import android.util.Log;
+
 import com.practice.qifan.domain.bean.ZhuangbiImageBean;
 import com.practice.qifan.domain.usecase.Zhuangbi.GetZhuangbiListUseCase;
+import com.practice.qifan.rxjavapractice.BaseContract;
+import com.practice.qifan.rxjavapractice.BasePresenter;
+import com.practice.qifan.rxjavapractice.dagger.scope.PerActivity;
 import com.practice.qifan.rxjavapractice.mapper.ZhuangbiModel;
 import com.practice.qifan.rxjavapractice.mapper.ZhuangbiModelMapper;
-import com.practice.qifan.rxjavapractice.ui.ElementaryFragment;
-import com.practice.qifan.rxjavapractice.view.ElementaryView;
+import com.practice.qifan.rxjavapractice.view.ElementaryContract;
 
 import java.util.Collection;
 import java.util.List;
 
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+import javax.inject.Inject;
+
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 
 /**
  * Created by qifan on 2018/2/20.
  */
+@PerActivity
+public class ElementaryPresenter extends BasePresenter implements ElementaryContract.Presenter {
 
-public class ElementaryPresenter {
-    private ElementaryView view;
-    private final GetZhuangbiListUseCase getZhuangbiListUseCase;
-    private final ZhuangbiModelMapper zhuangbiModelMapper;
+    private ElementaryContract.View mView;
+    private final GetZhuangbiListUseCase mGetZhuangbiListUseCase;
+    private final ZhuangbiModelMapper mZhuangbiModelMapper;
 
+    @Inject
     public ElementaryPresenter(GetZhuangbiListUseCase getZhuangbiListUseCase, ZhuangbiModelMapper zhuangbiModelMapper) {
-        this.getZhuangbiListUseCase = getZhuangbiListUseCase;
-        this.zhuangbiModelMapper = zhuangbiModelMapper;
+        mGetZhuangbiListUseCase = getZhuangbiListUseCase;
+        mZhuangbiModelMapper = zhuangbiModelMapper;
     }
 
 
-    public void setView(ElementaryView view) {
-        this.view = view;
+    @Override
+    public void subscribe(BaseContract.View view) {
+        mView = (ElementaryContract.View) view;
     }
 
-    public void destory() {
-        this.getZhuangbiListUseCase.dispose();
-        this.view = null;
-    }
-
-    /**
-     * Initializes the presenter by start retrieving the user list.
-     */
-    public void initialize() {
-        this.loadUserList();
-    }
-
-    private void showZhuangbiCollectionInView(Collection<ZhuangbiImageBean> zhuangbiCollection) {
-        final Collection<ZhuangbiModel> zhuangbiModelCollection =
-                this.zhuangbiModelMapper.transform(zhuangbiCollection);
-        this.view.renderUserList(zhuangbiModelCollection);
+    @Override
+    public void unsubscribe() {
+        mView = null;
+        mGetZhuangbiListUseCase.dispose();
     }
 
 
-    private void loadUserList() {
-        this.getZhuangbiListUseCase.execute(new ZhuangbiListObserver());
+    @Override
+    public void showImageList() {
+        mGetZhuangbiListUseCase.execute(new DisposableObserver<List<ZhuangbiImageBean>>() {
+            @Override
+            public void onNext(List<ZhuangbiImageBean> zhuangbiImageBeans) {
+                Log.d("Presenter","OnNext");
+                showImageCollectionInView(zhuangbiImageBeans);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d("Presenter","onError");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d("Presenter","onComplete");
+            }
+        });
     }
 
-    private class ZhuangbiListObserver extends DisposableObserver<List<ZhuangbiImageBean>> {
+    @Override
+    public void setKeyWord(String name) {
+        mGetZhuangbiListUseCase.setKeyword(name);
+    }
 
-        @Override
-        public void onNext(List<ZhuangbiImageBean> zhuangbiModels) {
-            ElementaryPresenter.this.showZhuangbiCollectionInView(zhuangbiModels);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
+    private void showImageCollectionInView(List<ZhuangbiImageBean> zhuangbiImageBeans) {
+        final Collection<ZhuangbiModel> zhuangbiModelCollection = mZhuangbiModelMapper.transform(zhuangbiImageBeans);
+        Log.d("%s",zhuangbiModelCollection.size()+"");
+        mView.renderImageList(zhuangbiModelCollection);
     }
 }

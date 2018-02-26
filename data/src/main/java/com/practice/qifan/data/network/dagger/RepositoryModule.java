@@ -11,6 +11,10 @@ import dagger.Provides;
  */
 @Module
 public class RepositoryModule {
+
+    public RepositoryModule() {
+    }
+
     @Provides
     public ZhuangbiImageRepository provideZhaungbiImageDataRepository(ZhuangbiImageDataRepository zhuangbiImageDataRepository) {
         return zhuangbiImageDataRepository;
