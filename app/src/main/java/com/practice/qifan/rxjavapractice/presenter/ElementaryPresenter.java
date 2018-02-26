@@ -16,7 +16,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -25,9 +24,9 @@ import io.reactivex.observers.DisposableObserver;
 @PerActivity
 public class ElementaryPresenter extends BasePresenter implements ElementaryContract.Presenter {
 
-    private ElementaryContract.View mView;
     private final GetZhuangbiListUseCase mGetZhuangbiListUseCase;
     private final ZhuangbiModelMapper mZhuangbiModelMapper;
+    private ElementaryContract.View mView;
 
     @Inject
     public ElementaryPresenter(GetZhuangbiListUseCase getZhuangbiListUseCase, ZhuangbiModelMapper zhuangbiModelMapper) {
@@ -53,18 +52,18 @@ public class ElementaryPresenter extends BasePresenter implements ElementaryCont
         mGetZhuangbiListUseCase.execute(new DisposableObserver<List<ZhuangbiImageBean>>() {
             @Override
             public void onNext(List<ZhuangbiImageBean> zhuangbiImageBeans) {
-                Log.d("Presenter","OnNext");
+                Log.d("Presenter", "OnNext");
                 showImageCollectionInView(zhuangbiImageBeans);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("Presenter","onError");
+                Log.d("Presenter", "onError");
             }
 
             @Override
             public void onComplete() {
-                Log.d("Presenter","onComplete");
+                Log.d("Presenter", "onComplete");
             }
         });
     }
@@ -76,7 +75,7 @@ public class ElementaryPresenter extends BasePresenter implements ElementaryCont
 
     private void showImageCollectionInView(List<ZhuangbiImageBean> zhuangbiImageBeans) {
         final Collection<ZhuangbiModel> zhuangbiModelCollection = mZhuangbiModelMapper.transform(zhuangbiImageBeans);
-        Log.d("%s",zhuangbiModelCollection.size()+"");
+        Log.d("%s", zhuangbiModelCollection.size() + "");
         mView.renderImageList(zhuangbiModelCollection);
     }
 }

@@ -1,16 +1,14 @@
-package com.practice.qifan.rxjavapractice;
+package com.practice.qifan.rxjavapractice.ui;
 
-import android.media.Image;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.practice.qifan.rxjavapractice.dagger.component.ImageComponent;
-import com.practice.qifan.rxjavapractice.ui.ElementaryFragment;
+import com.practice.qifan.rxjavapractice.BaseActivity;
+import com.practice.qifan.rxjavapractice.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
