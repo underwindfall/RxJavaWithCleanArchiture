@@ -2,7 +2,10 @@ package com.practice.qifan.rxjavapractice;
 
 import android.app.Application;
 
+import com.orhanobut.logger.Logger;
 import com.practice.qifan.rxjavapractice.dagger.component.ApplicationComponent;
+
+import timber.log.Timber;
 
 /**
  * Created by qifan on 2018/1/29.
@@ -20,6 +23,15 @@ public class RxJavaSampleApp extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree() {
+                @Override
+                protected void log(int priority, String tag, String message, Throwable t) {
+                    super.log(priority, tag, message, t);
+                    Logger.log(priority, tag, message, t);
+                }
+            });
+        }
         mApplicationComponent = initializeApplicationComponent();
         mApplicationComponent.inject(this);
     }
@@ -31,4 +43,6 @@ public class RxJavaSampleApp extends Application {
     ApplicationComponent initializeApplicationComponent() {
         return ApplicationComponent.Initializer.init(getApplicationContext());
     }
+
+
 }
