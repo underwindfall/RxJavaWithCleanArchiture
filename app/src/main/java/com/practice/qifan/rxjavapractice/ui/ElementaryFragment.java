@@ -71,6 +71,7 @@ public class ElementaryFragment extends BaseFragment implements ElementaryContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        ((MainActivity)getActivity()).getImageComponent().inject(this);
         ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule()).inject(this);
         mElementaryPresenter.subscribe(this);
     }

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.practice.qifan.rxjavapractice.BaseActivity;
 import com.practice.qifan.rxjavapractice.R;
+import com.practice.qifan.rxjavapractice.dagger.component.ImageComponent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.toolBar)
     Toolbar toolBar;
 
-//    ImageComponent mImageComponent;
+    ImageComponent mImageComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +30,15 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
-//        mImageComponent = ImageComponent.Initializer.init(getApplicationComponent(),getActivityModule());
+        mImageComponent = ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule());
         viewPager.setAdapter((new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
                         return new ElementaryFragment();
-//                    case 1:
-//                        return new MapFragment();
+                    case 1:
+                        return new MapFragment();
 //                    case 2:
 //                        return new ZipFragment();
 //                    case 3:
@@ -53,7 +54,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public int getCount() {
-                return 1;
+                return 2;
             }
 
             @Override
@@ -61,8 +62,8 @@ public class MainActivity extends BaseActivity {
                 switch (position) {
                     case 0:
                         return getString(R.string.title_elementary);
-//                    case 1:
-//                        return getString(R.string.title_map);
+                    case 1:
+                        return getString(R.string.title_map);
 //                    case 2:
 //                        return getString(R.string.title_zip);
 //                    case 3:
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-//    public ImageComponent getImageComponent() {
-//        return mImageComponent;
-//    }
+    public ImageComponent getImageComponent() {
+        return mImageComponent;
+    }
 }

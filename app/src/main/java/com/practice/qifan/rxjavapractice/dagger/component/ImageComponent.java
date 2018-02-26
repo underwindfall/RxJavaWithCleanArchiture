@@ -4,6 +4,7 @@ import com.practice.qifan.rxjavapractice.dagger.module.ActivityModule;
 import com.practice.qifan.rxjavapractice.dagger.module.ImageModule;
 import com.practice.qifan.rxjavapractice.dagger.scope.PerActivity;
 import com.practice.qifan.rxjavapractice.ui.ElementaryFragment;
+import com.practice.qifan.rxjavapractice.ui.MapFragment;
 
 import dagger.Component;
 
@@ -15,6 +16,8 @@ import dagger.Component;
 public interface ImageComponent extends ActivityComponent {
 
     void inject(ElementaryFragment elementaryFragment);
+
+    void inject(MapFragment mapFragment);
 
     final class Initializer {
 
