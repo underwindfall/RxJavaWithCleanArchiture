@@ -20,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     public static final String RETROFIT_ZHUANGBI = "zhuangbi";
+    public static final String RETROFIT_GANK = "gank";
 
     public NetworkModule() {
     }
@@ -41,7 +42,7 @@ public class NetworkModule {
     @Provides
     @Named(RETROFIT_ZHUANGBI)
     @Singleton
-    public Retrofit provideRetrofit(Gson gson, OkHttpClient.Builder builder) {
+    Retrofit provideRetrofitZhuangbi(Gson gson, OkHttpClient.Builder builder) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://www.zhuangbi.info/")
                 .client(builder.build())
@@ -50,4 +51,19 @@ public class NetworkModule {
                 .build();
         return retrofit;
     }
+
+    @Provides
+    @Named(RETROFIT_GANK)
+    @Singleton
+    Retrofit provideRetrofitGank(Gson gson, OkHttpClient.Builder builder) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://gank.io/api/")
+                .client(builder.build())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        return retrofit;
+    }
+
+
 }

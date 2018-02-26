@@ -1,4 +1,4 @@
-package com.practice.qifan.domain.usecase.Zhuangbi;
+package com.practice.qifan.domain.usecase.zhuangbi;
 
 import com.practice.qifan.domain.bean.ZhuangbiImageBean;
 import com.practice.qifan.domain.executor.PostExecutionThread;
@@ -12,6 +12,7 @@ import io.reactivex.Observable;
 
 /**
  * Created by qifan on 2018/2/20.
+ * GetZhuangbiListUseCase
  */
 
 public class GetZhuangbiListUseCase extends UseCase<List<ZhuangbiImageBean>> {

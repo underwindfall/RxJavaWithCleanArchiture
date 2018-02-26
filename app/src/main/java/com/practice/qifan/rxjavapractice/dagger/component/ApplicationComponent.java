@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.practice.qifan.data.network.dagger.NetworkModule;
 import com.practice.qifan.data.network.dagger.RepositoryModule;
 import com.practice.qifan.domain.executor.PostExecutionThread;
+import com.practice.qifan.domain.repository.GankImageRepository;
 import com.practice.qifan.domain.repository.ZhuangbiImageRepository;
 import com.practice.qifan.rxjavapractice.BaseActivity;
 import com.practice.qifan.rxjavapractice.RxJavaSampleApp;
@@ -14,7 +15,6 @@ import com.practice.qifan.rxjavapractice.dagger.module.ApplicationModule;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.reactivex.Scheduler;
 
 /**
  * Created by qifan on 2018/2/25.
@@ -34,6 +34,8 @@ public interface ApplicationComponent {
     PostExecutionThread postExecutionThread();
 
     ZhuangbiImageRepository zhuangbiImageRepository();
+
+    GankImageRepository gankImageRepository();
 
 
     final class Initializer {
