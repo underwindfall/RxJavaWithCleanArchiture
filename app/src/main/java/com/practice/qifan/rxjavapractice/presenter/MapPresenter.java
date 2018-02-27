@@ -16,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.observers.DisposableObserver;
+import timber.log.Timber;
 
 /**
  * Created by qifan on 2018/2/26.
@@ -56,12 +57,12 @@ public class MapPresenter extends BasePresenter implements MapContract.Presenter
 
             @Override
             public void onError(Throwable e) {
-
+                Timber.e(e);
             }
 
             @Override
             public void onComplete() {
-
+                Timber.d("MapPresenter is Completed");
             }
         });
     }

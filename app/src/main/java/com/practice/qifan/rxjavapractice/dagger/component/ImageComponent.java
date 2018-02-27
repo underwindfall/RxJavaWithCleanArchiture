@@ -3,8 +3,8 @@ package com.practice.qifan.rxjavapractice.dagger.component;
 import com.practice.qifan.rxjavapractice.dagger.module.ActivityModule;
 import com.practice.qifan.rxjavapractice.dagger.module.ImageModule;
 import com.practice.qifan.rxjavapractice.dagger.scope.PerActivity;
-import com.practice.qifan.rxjavapractice.ui.ElementaryFragment;
-import com.practice.qifan.rxjavapractice.ui.MapFragment;
+import com.practice.qifan.rxjavapractice.ui.fragment.Elementary.ElementaryFragment;
+import com.practice.qifan.rxjavapractice.ui.fragment.Map.MapFragment;
 
 import dagger.Component;
 
