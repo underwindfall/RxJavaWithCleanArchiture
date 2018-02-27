@@ -11,8 +11,8 @@
 
         <RadioGroup
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatRadioButton
@@ -44,6 +44,7 @@
         <include layout="@layout/tip_bt" />
 
     </LinearLayout>
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

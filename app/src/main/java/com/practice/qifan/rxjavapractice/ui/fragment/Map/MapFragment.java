@@ -1,4 +1,4 @@
-package com.practice.qifan.rxjavapractice.ui;
+package com.practice.qifan.rxjavapractice.ui.fragment.Map;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.practice.qifan.rxjavapractice.BaseFragment;
 import com.practice.qifan.rxjavapractice.R;
 import com.practice.qifan.rxjavapractice.adapter.ItemListAdapter;
-import com.practice.qifan.rxjavapractice.dagger.component.ImageComponent;
 import com.practice.qifan.rxjavapractice.mapper.GankResultModel;
 import com.practice.qifan.rxjavapractice.presenter.MapPresenter;
+import com.practice.qifan.rxjavapractice.ui.activity.MainActivity;
 import com.practice.qifan.rxjavapractice.view.MapContract;
 
 import java.util.Collection;
@@ -86,8 +86,8 @@ public class MapFragment extends BaseFragment implements MapContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule()).inject(this);
-//        ((MainActivity)getActivity()).getImageComponent().inject(this);
+//        ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule()).inject(this);
+        ((MainActivity) getActivity()).getImageComponent().inject(this);
         mMapPresenter.subscribe(this);
     }
 

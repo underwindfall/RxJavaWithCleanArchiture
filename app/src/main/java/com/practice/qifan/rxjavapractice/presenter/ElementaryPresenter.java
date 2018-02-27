@@ -1,7 +1,5 @@
 package com.practice.qifan.rxjavapractice.presenter;
 
-import android.util.Log;
-
 import com.practice.qifan.domain.bean.ZhuangbiImageBean;
 import com.practice.qifan.domain.usecase.zhuangbi.GetZhuangbiListUseCase;
 import com.practice.qifan.rxjavapractice.BaseContract;
@@ -16,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.observers.DisposableObserver;
+import timber.log.Timber;
 
 /**
  * Created by qifan on 2018/2/20.
@@ -51,18 +50,18 @@ public class ElementaryPresenter extends BasePresenter implements ElementaryCont
         mGetZhuangbiListUseCase.execute(new DisposableObserver<List<ZhuangbiImageBean>>() {
             @Override
             public void onNext(List<ZhuangbiImageBean> zhuangbiImageBeans) {
-                Log.d("Presenter", "OnNext");
+                Timber.d("OnNext");
                 showImageCollectionInView(zhuangbiImageBeans);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d("Presenter", "onError");
+                Timber.e(e);
             }
 
             @Override
             public void onComplete() {
-                Log.d("Presenter", "onComplete");
+                Timber.d("ElementaryPresenter is Completed");
             }
         });
     }
@@ -74,7 +73,7 @@ public class ElementaryPresenter extends BasePresenter implements ElementaryCont
 
     private void showImageCollectionInView(List<ZhuangbiImageBean> zhuangbiImageBeans) {
         final Collection<ZhuangbiModel> zhuangbiModelCollection = mZhuangbiModelMapper.transform(zhuangbiImageBeans);
-        Log.d("%s", zhuangbiModelCollection.size() + "");
+        Timber.d(zhuangbiModelCollection.size() + "");
         mView.renderImageList(zhuangbiModelCollection);
     }
 }
