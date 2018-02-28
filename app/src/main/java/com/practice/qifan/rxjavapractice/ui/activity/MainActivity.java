@@ -2,8 +2,8 @@ package com.practice.qifan.rxjavapractice.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 
 import com.practice.qifan.rxjavapractice.BaseActivity;
@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity {
     Toolbar toolBar;
 
     ImageComponent mImageComponent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,24 +89,30 @@ public class MainActivity extends BaseActivity {
 //        }));
 
 
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_elementary)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_elementary)), true);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_map)));
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .add(R.id.fragment_container, new ElementaryFragment())
-//                .addToBackStack(null)
-//                .commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ElementaryFragment()).commit();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 switch (tab.getPosition()) {
-                    case 2:
-                        replaceFragmentToStack(new ElementaryFragment());
+                    case 0:
+                        fragmentTransaction.replace(R.id.fragment_container, new ElementaryFragment());
+                        break;
                     case 1:
-                        replaceFragmentToStack(new MapFragment());
+
+                        fragmentTransaction.replace(R.id.fragment_container, new MapFragment());
+
+                        break;
                     default:
-                        replaceFragmentToStack(new ElementaryFragment());
+                        fragmentTransaction.replace(R.id.fragment_container, new ElementaryFragment());
+                        break;
                 }
+                fragmentTransaction.commit();
             }
 
             @Override
@@ -120,17 +127,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void replaceFragmentToStack(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-//        if (fragmentManager.getFragments()!=null){
-//            fragmentManager.popBackStack();
-//        }
-        fragmentManager.getFragments().clear();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit();
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

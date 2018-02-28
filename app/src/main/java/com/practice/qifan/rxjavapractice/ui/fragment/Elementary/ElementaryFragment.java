@@ -140,6 +140,7 @@ public class ElementaryFragment extends BaseFragment implements ElementaryContra
         ((MainActivity) getActivity()).getImageComponent().inject(this);
 //        ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule()).inject(this);
         mElementaryPresenter.subscribe(this);
+
     }
 
     @Override

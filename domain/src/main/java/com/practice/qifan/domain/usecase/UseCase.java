@@ -7,7 +7,6 @@ package com.practice.qifan.domain.usecase;
 import com.practice.qifan.domain.executor.PostExecutionThread;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -43,7 +42,7 @@ public abstract class UseCase<T> {
      *                 by {@link #buildUseCaseObservable()} ()} method.
      */
     public void execute(DisposableObserver<T> observer) {
-
+        dispose();
         if (observer != null) {
             final Observable<T> observable = this.buildUseCaseObservable()
                     .subscribeOn(Schedulers.io())
@@ -57,7 +56,7 @@ public abstract class UseCase<T> {
      */
     public void dispose() {
         if (!disposables.isDisposed()) {
-            disposables.dispose();
+            disposables.clear();
         }
     }
 

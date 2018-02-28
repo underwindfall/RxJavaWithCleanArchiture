@@ -88,6 +88,7 @@ public class MapFragment extends BaseFragment implements MapContract.View {
         super.onActivityCreated(savedInstanceState);
 //        ImageComponent.Initializer.init(getApplicationComponent(), getActivityModule()).inject(this);
         ((MainActivity) getActivity()).getImageComponent().inject(this);
+
         mMapPresenter.subscribe(this);
     }
 

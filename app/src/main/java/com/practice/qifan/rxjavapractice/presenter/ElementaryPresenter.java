@@ -4,6 +4,7 @@ import com.practice.qifan.domain.bean.ZhuangbiImageBean;
 import com.practice.qifan.domain.usecase.zhuangbi.GetZhuangbiListUseCase;
 import com.practice.qifan.rxjavapractice.BaseContract;
 import com.practice.qifan.rxjavapractice.BasePresenter;
+import com.practice.qifan.rxjavapractice.dagger.scope.PerActivity;
 import com.practice.qifan.rxjavapractice.mapper.ZhuangbiModel;
 import com.practice.qifan.rxjavapractice.mapper.ZhuangbiModelMapper;
 import com.practice.qifan.rxjavapractice.view.ElementaryContract;
@@ -19,11 +20,11 @@ import timber.log.Timber;
 /**
  * Created by qifan on 2018/2/20.
  */
-
+@PerActivity
 public class ElementaryPresenter extends BasePresenter implements ElementaryContract.Presenter {
 
-    private final GetZhuangbiListUseCase mGetZhuangbiListUseCase;
-    private final ZhuangbiModelMapper mZhuangbiModelMapper;
+    private GetZhuangbiListUseCase mGetZhuangbiListUseCase;
+    private ZhuangbiModelMapper mZhuangbiModelMapper;
     private ElementaryContract.View mView;
 
     @Inject
@@ -47,21 +48,22 @@ public class ElementaryPresenter extends BasePresenter implements ElementaryCont
 
     @Override
     public void showImageList() {
+        Timber.d(mGetZhuangbiListUseCase.toString());
         mGetZhuangbiListUseCase.execute(new DisposableObserver<List<ZhuangbiImageBean>>() {
             @Override
             public void onNext(List<ZhuangbiImageBean> zhuangbiImageBeans) {
-                Timber.d("OnNext");
+//                Timber.d("OnNext");
                 showImageCollectionInView(zhuangbiImageBeans);
             }
 
             @Override
             public void onError(Throwable e) {
-                Timber.e(e);
+//                Timber.e(e);
             }
 
             @Override
             public void onComplete() {
-                Timber.d("ElementaryPresenter is Completed");
+//                Timber.d("ElementaryPresenter is Completed");
             }
         });
     }
@@ -73,7 +75,7 @@ public class ElementaryPresenter extends BasePresenter implements ElementaryCont
 
     private void showImageCollectionInView(List<ZhuangbiImageBean> zhuangbiImageBeans) {
         final Collection<ZhuangbiModel> zhuangbiModelCollection = mZhuangbiModelMapper.transform(zhuangbiImageBeans);
-        Timber.d(zhuangbiModelCollection.size() + "");
+//        Timber.d(zhuangbiModelCollection.size() + "");
         mView.renderImageList(zhuangbiModelCollection);
     }
 }

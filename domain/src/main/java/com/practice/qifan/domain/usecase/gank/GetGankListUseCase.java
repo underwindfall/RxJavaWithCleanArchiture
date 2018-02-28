@@ -5,6 +5,8 @@ import com.practice.qifan.domain.executor.PostExecutionThread;
 import com.practice.qifan.domain.repository.GankImageRepository;
 import com.practice.qifan.domain.usecase.UseCase;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 /**
@@ -18,6 +20,7 @@ public class GetGankListUseCase extends UseCase<GankImageBean> {
     private int mPage;
     private int mNumber;
 
+    @Inject
     public GetGankListUseCase(PostExecutionThread postExecutionThread, GankImageRepository gankImageRepository) {
         super(postExecutionThread);
         mGankImageRepository = gankImageRepository;
