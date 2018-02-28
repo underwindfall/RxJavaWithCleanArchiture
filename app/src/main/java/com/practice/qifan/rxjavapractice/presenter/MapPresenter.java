@@ -4,7 +4,6 @@ import com.practice.qifan.domain.bean.GankImageBean;
 import com.practice.qifan.domain.bean.GankImageResultBean;
 import com.practice.qifan.domain.usecase.gank.GetGankListUseCase;
 import com.practice.qifan.rxjavapractice.BaseContract;
-import com.practice.qifan.rxjavapractice.dagger.scope.PerActivity;
 import com.practice.qifan.rxjavapractice.mapper.GankResultModel;
 import com.practice.qifan.rxjavapractice.mapper.GankResultModelMapper;
 import com.practice.qifan.rxjavapractice.view.MapContract;
@@ -20,7 +19,7 @@ import timber.log.Timber;
 /**
  * Created by qifan on 2018/2/26.
  */
-@PerActivity
+
 public class MapPresenter implements MapContract.Presenter {
 
     private GetGankListUseCase mGetGankListUseCase;

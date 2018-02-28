@@ -7,8 +7,6 @@ import com.practice.qifan.domain.usecase.UseCase;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 
 
@@ -21,7 +19,7 @@ public class GetZhuangbiListUseCase extends UseCase<List<ZhuangbiImageBean>> {
     private ZhuangbiImageRepository mZhuangbiImageRepository;
     private String mKeyword;
 
-    @Inject
+
     public GetZhuangbiListUseCase(PostExecutionThread postExecutionThread, ZhuangbiImageRepository zhuangbiImageRepository) {
         super(postExecutionThread);
         mZhuangbiImageRepository = zhuangbiImageRepository;

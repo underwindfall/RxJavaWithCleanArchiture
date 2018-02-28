@@ -53,13 +53,19 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
-    implementation 'com.jakewharton.timber:timber:4.6.1'
-    implementation 'com.orhanobut:logger:2.1.1'
-
     implementation 'com.google.dagger:dagger:2.8'
 //    implementation 'com.google.dagger:dagger-android-support:2.13' // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
     implementation 'com.google.code.gson:gson:2.8.0'
+
+    //For Log
+    implementation 'com.jakewharton.timber:timber:4.6.1'
+    implementation 'com.orhanobut:logger:2.1.1'
+    //For Debug
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
